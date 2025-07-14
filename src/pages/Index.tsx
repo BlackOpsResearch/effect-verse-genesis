@@ -1,12 +1,12 @@
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/HeroSection";
 import { EffectsShowcase } from "@/components/EffectsShowcase";
-import { ParticleBackground } from "@/components/ParticleBackground";
+import { NeuralNetworkBackground } from "@/components/NeuralNetworkBackground";
 
 const Index = () => {
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground />
+      <NeuralNetworkBackground />
       <Navigation />
       <main>
         <HeroSection />

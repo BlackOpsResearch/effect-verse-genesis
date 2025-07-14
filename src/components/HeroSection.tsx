@@ -1,4 +1,5 @@
-import { HolographicButton } from "./HolographicButton";
+import { ElectricButton } from "./ElectricButton";
+import { AnimatedText } from "./AnimatedText";
 import { Sparkles, Zap, Wand2, Play } from "lucide-react";
 
 export function HeroSection() {
@@ -22,11 +23,11 @@ export function HeroSection() {
 
           {/* Main heading */}
           <h1 className="text-6xl md:text-8xl font-bold leading-tight">
-            <span className="text-electric animate-glow">Create</span>
+            <AnimatedText text="Create" variant="electric" animation="glow" className="block" />
             <br />
-            <span className="gradient-electric bg-clip-text text-transparent animate-gradient-shift">Amazing</span>
+            <AnimatedText text="Amazing" variant="plasma" animation="wave" className="block" />
             <br />
-            <span className="text-foreground">Effects</span>
+            <AnimatedText text="Effects" variant="neural" animation="glitch" className="block" />
           </h1>
 
           {/* Subtitle */}
@@ -45,7 +46,7 @@ export function HeroSection() {
               "Sine Waves",
               "Holographics"
             ].map((feature) => (
-              <span key={feature} className="glass px-3 py-1 rounded-full border border-electric-cyan/20 text-electric-cyan">
+              <span key={feature} className="glass px-3 py-1 rounded-full border border-electric-cyan/20 text-electric-cyan animate-pulse">
                 {feature}
               </span>
             ))}
@@ -53,15 +54,15 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <HolographicButton variant="electric" size="lg" className="animate-electric-pulse">
+            <ElectricButton variant="electric" size="lg">
               <Play className="w-5 h-5 mr-2" />
               Explore Effects
-            </HolographicButton>
+            </ElectricButton>
             
-            <HolographicButton variant="cyber" size="lg">
+            <ElectricButton variant="cyber" size="lg">
               <Wand2 className="w-5 h-5 mr-2" />
               Create Your Own
-            </HolographicButton>
+            </ElectricButton>
           </div>
 
           {/* Stats */}

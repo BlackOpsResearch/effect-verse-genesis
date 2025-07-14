@@ -1,4 +1,4 @@
-import { HolographicButton } from "./HolographicButton";
+import { ElectricButton } from "./ElectricButton";
 import { Search, Menu, Zap, Palette, Download, User } from "lucide-react";
 
 export function Navigation() {
@@ -43,15 +43,15 @@ export function Navigation() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             </div>
             
-            <HolographicButton variant="cyber" size="sm">
+            <ElectricButton variant="cyber" size="sm">
               <Download className="w-4 h-4 mr-2" />
               Downloads
-            </HolographicButton>
+            </ElectricButton>
             
-            <HolographicButton variant="electric" size="sm">
+            <ElectricButton variant="electric" size="sm">
               <User className="w-4 h-4 mr-2" />
               Account
-            </HolographicButton>
+            </ElectricButton>
 
             <button className="md:hidden">
               <Menu className="w-6 h-6 text-foreground" />

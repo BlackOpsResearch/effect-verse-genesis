@@ -1,5 +1,5 @@
 import { EffectCard } from "./EffectCard";
-import { HolographicButton } from "./HolographicButton";
+import { ElectricButton } from "./ElectricButton";
 import { Grid3X3, Filter, Sparkles } from "lucide-react";
 
 const effectsData = [
@@ -88,26 +88,26 @@ export function EffectsShowcase() {
         <div className="flex flex-col lg:flex-row gap-6 mb-12">
           <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
-              <HolographicButton 
+              <ElectricButton 
                 key={category} 
-                variant={category === "All Effects" ? "electric" : "default"}
+                variant={category === "All Effects" ? "electric" : "neural"}
                 size="sm"
                 className="text-sm"
               >
                 {category}
-              </HolographicButton>
+              </ElectricButton>
             ))}
           </div>
           
           <div className="flex gap-3 lg:ml-auto">
-            <HolographicButton variant="cyber" size="sm">
+            <ElectricButton variant="cyber" size="sm">
               <Filter className="w-4 h-4 mr-2" />
               Filters
-            </HolographicButton>
-            <HolographicButton variant="default" size="sm">
+            </ElectricButton>
+            <ElectricButton variant="plasma" size="sm">
               <Grid3X3 className="w-4 h-4 mr-2" />
               Grid View
-            </HolographicButton>
+            </ElectricButton>
           </div>
         </div>
 
@@ -129,9 +129,9 @@ export function EffectsShowcase() {
 
         {/* Load More */}
         <div className="text-center">
-          <HolographicButton variant="electric" size="lg">
+          <ElectricButton variant="electric" size="lg">
             Load More Effects
-          </HolographicButton>
+          </ElectricButton>
         </div>
       </div>
     </section>
