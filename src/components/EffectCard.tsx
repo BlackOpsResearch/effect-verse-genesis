@@ -3,6 +3,12 @@ import { ElectricButton } from "./ElectricButton";
 import { PlasmaEffect } from "./PlasmaEffect";
 import { LSystemTree } from "./LSystemTree";
 import { SineWaveEffect } from "./SineWaveEffect";
+import { HologramShader } from "./HologramShader";
+import { CyberGrid } from "./CyberGrid";
+import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
+import { MorphingGeometry } from "./MorphingGeometry";
+import { QuantumField } from "./QuantumField";
+import { CrystalGrowth } from "./CrystalGrowth";
 import { Play, Eye, Download } from "lucide-react";
 
 interface EffectCardProps {
@@ -35,14 +41,35 @@ export function EffectCard({ title, description, category, preview, className, s
             <SineWaveEffect />
           </div>
         )}
-        {(!["Plasma Effects", "Generative", "Physics"].includes(category)) && (
-          <>
-            <div className="absolute inset-0 particle-bg opacity-60" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full gradient-electric animate-float opacity-80" />
-              <div className="absolute w-16 h-16 rounded-full gradient-plasma animate-glow" />
-            </div>
-          </>
+        {category === "UI Effects" && (
+          <div className="absolute inset-0">
+            <HologramShader />
+          </div>
+        )}
+        {category === "WebGPU" && (
+          <div className="absolute inset-0">
+            <CyberGrid />
+          </div>
+        )}
+        {category === "Data Viz" && (
+          <div className="absolute inset-0">
+            <NeuralNetworkBackground />
+          </div>
+        )}
+        {category === "3D Math" && (
+          <div className="absolute inset-0">
+            <MorphingGeometry />
+          </div>
+        )}
+        {category === "Abstract" && (
+          <div className="absolute inset-0">
+            <QuantumField intensity={0.8} />
+          </div>
+        )}
+        {category === "Simulation" && (
+          <div className="absolute inset-0">
+            <CrystalGrowth />
+          </div>
         )}
         
         {/* Overlay controls */}
