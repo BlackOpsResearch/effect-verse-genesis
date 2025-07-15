@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { EffectCard } from "./EffectCard";
 import { ElectricButton } from "./ElectricButton";
 import { Grid3X3, Filter, Sparkles } from "lucide-react";
 
-const effectsData = [
+const allEffectsData = [
   {
     title: "Electric Plasma Storm",
     description: "High-voltage plasma effects with realistic lightning and electrical discharge patterns.",
@@ -47,6 +48,81 @@ const effectsData = [
     title: "Crystal Growth",
     description: "Procedural crystal formation with realistic light refraction and caustics.",
     category: "Simulation"
+  },
+  {
+    title: "Galaxy Spiral",
+    description: "Stunning spiral galaxy formation with realistic stellar evolution and cosmic dust.",
+    category: "WebGPU"
+  },
+  {
+    title: "Electric Web",
+    description: "Dynamic electrical networks with real-time lightning connections and plasma nodes.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Fluid Dynamics",
+    description: "Interactive fluid simulation with mouse control and realistic viscosity physics.",
+    category: "Physics"
+  },
+  {
+    title: "DNA Helix",
+    description: "Animated double helix with base pair sequences and molecular precision.",
+    category: "Simulation"
+  },
+  {
+    title: "Fractal Mandelbrot",
+    description: "Infinite zoom fractal explorer with dynamic color mapping and mathematical beauty.",
+    category: "Generative"
+  },
+  {
+    title: "Particle Gravity",
+    description: "N-body gravitational simulation with orbital mechanics and stellar formation.",
+    category: "Physics"
+  },
+  {
+    title: "Volumetric Clouds",
+    description: "Ray-marched volumetric cloud rendering with realistic atmospheric scattering.",
+    category: "3D Math"
+  },
+  {
+    title: "Magnetic Fields",
+    description: "Electromagnetic field visualization with dynamic particle interactions.",
+    category: "Abstract"
+  },
+  {
+    title: "Procedural Fire",
+    description: "Realistic flame simulation with temperature gradients and particle combustion.",
+    category: "Simulation"
+  },
+  {
+    title: "Holographic Data",
+    description: "Futuristic data visualization with floating information panels and AR elements.",
+    category: "UI Effects"
+  },
+  {
+    title: "Cyber Matrix",
+    description: "Matrix-style digital rain with glitch effects and cyberpunk aesthetics.",
+    category: "Data Viz"
+  },
+  {
+    title: "Quantum Tunneling",
+    description: "Wave function collapse visualization with probability clouds and quantum mechanics.",
+    category: "Abstract"
+  },
+  {
+    title: "Plasma Tunnel",
+    description: "High-energy plasma corridor with electromagnetic containment fields.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Fractal Trees",
+    description: "Self-similar branching structures with infinite detail and organic growth patterns.",
+    category: "Generative"
+  },
+  {
+    title: "Sonic Waves",
+    description: "Audio-reactive wave propagation with frequency analysis and resonance effects.",
+    category: "Physics"
   }
 ];
 
@@ -64,6 +140,25 @@ const categories = [
 ];
 
 export function EffectsShowcase() {
+  const [activeCategory, setActiveCategory] = useState("All Effects");
+  const [visibleCount, setVisibleCount] = useState(9);
+  
+  const filteredEffects = activeCategory === "All Effects" 
+    ? allEffectsData 
+    : allEffectsData.filter(effect => effect.category === activeCategory);
+  
+  const visibleEffects = filteredEffects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredEffects.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 6, filteredEffects.length));
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setVisibleCount(9);
+  };
+
   return (
     <section className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -90,9 +185,10 @@ export function EffectsShowcase() {
             {categories.map((category) => (
               <ElectricButton 
                 key={category} 
-                variant={category === "All Effects" ? "electric" : "neural"}
+                variant={category === activeCategory ? "electric" : "neural"}
                 size="sm"
                 className="text-sm"
+                onClick={() => handleCategoryChange(category)}
               >
                 {category}
               </ElectricButton>
@@ -113,26 +209,36 @@ export function EffectsShowcase() {
 
         {/* Effects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {effectsData.map((effect, index) => (
+          {visibleEffects.map((effect, index) => (
             <EffectCard
-              key={index}
+              key={`${effect.title}-${index}`}
               title={effect.title}
               description={effect.description}
               category={effect.category}
-              className={index % 3 === 0 ? "animate-float" : index % 3 === 1 ? "animate-float" : "animate-float"}
+              className="animate-float"
               style={{
-                animationDelay: `${index * 0.2}s`
+                animationDelay: `${index * 0.1}s`
               } as React.CSSProperties}
             />
           ))}
         </div>
 
         {/* Load More */}
-        <div className="text-center">
-          <ElectricButton variant="electric" size="lg">
-            Load More Effects
-          </ElectricButton>
-        </div>
+        {hasMore && (
+          <div className="text-center">
+            <ElectricButton variant="electric" size="lg" onClick={handleLoadMore}>
+              Load More Effects ({filteredEffects.length - visibleCount} remaining)
+            </ElectricButton>
+          </div>
+        )}
+        
+        {!hasMore && filteredEffects.length > 9 && (
+          <div className="text-center">
+            <p className="text-muted-foreground">
+              Showing all {filteredEffects.length} effects in {activeCategory}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
