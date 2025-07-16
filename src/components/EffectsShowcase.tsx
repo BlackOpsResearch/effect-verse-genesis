@@ -80,6 +80,36 @@ const allEffectsData = [
     category: "Physics"
   },
   {
+    title: "Matrix Rain",
+    description: "Classic Matrix digital rain effect with cascading characters and authentic green glow.",
+    category: "UI Effects"
+  },
+  {
+    title: "Neon Pulse",
+    description: "Pulsating neon rings with electric glow effects and radial wave propagation.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Voronoi Diagrams",
+    description: "Dynamic Voronoi cell tessellation with animated seed points and color transitions.",
+    category: "Generative"
+  },
+  {
+    title: "Wave Interference",
+    description: "Multiple wave source interference patterns creating complex ripple interactions.",
+    category: "Physics"
+  },
+  {
+    title: "Geometric Tunnel",
+    description: "Infinite geometric tunnel with polygon morphing and depth-based scaling effects.",
+    category: "3D Math"
+  },
+  {
+    title: "Game of Life",
+    description: "Conway's Game of Life cellular automaton with colorful cell evolution and survival rules.",
+    category: "Simulation"
+  },
+  {
     title: "Volumetric Clouds",
     description: "Ray-marched volumetric cloud rendering with realistic atmospheric scattering.",
     category: "3D Math"
@@ -106,7 +136,7 @@ const allEffectsData = [
   },
   {
     title: "Quantum Tunneling",
-    description: "Wave function collapse visualization with probability clouds and quantum mechanics.",
+    description: "Geometric tunnel with quantum-inspired visual effects and particle transportation.",
     category: "Abstract"
   },
   {
