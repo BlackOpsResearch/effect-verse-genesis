@@ -153,6 +153,41 @@ const allEffectsData = [
     title: "Sonic Waves",
     description: "Audio-reactive wave propagation with frequency analysis and resonance effects.",
     category: "Physics"
+  },
+  {
+    title: "Fireworks Burst",
+    description: "Spectacular particle fireworks with physics-based explosions and gravity effects.",
+    category: "Particles"
+  },
+  {
+    title: "Lightning Storm",
+    description: "Dynamic lightning bolts with realistic branching patterns and electrical discharge.",
+    category: "Weather"
+  },
+  {
+    title: "Ocean Waves",
+    description: "Realistic fluid wave simulation with foam effects and multi-layered wave interference.",
+    category: "Physics"
+  },
+  {
+    title: "Plasma Ball",
+    description: "Electric arcs emanating from energy core with tesla coil-inspired lightning effects.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Ripple Effect",
+    description: "Expanding water ripples with wave interference and dynamic amplitude modulation.",
+    category: "Physics"
+  },
+  {
+    title: "Binary Matrix",
+    description: "Falling binary code rain effect with authentic terminal glow and character trails.",
+    category: "Data Viz"
+  },
+  {
+    title: "Particle Swarm",
+    description: "Connected particles with swarm intelligence behavior and dynamic network formation.",
+    category: "Particles"
   }
 ];
 
@@ -166,7 +201,9 @@ const categories = [
   "Data Viz",
   "3D Math",
   "Abstract",
-  "Simulation"
+  "Simulation",
+  "Particles",
+  "Weather"
 ];
 
 export function EffectsShowcase() {
