@@ -34,6 +34,13 @@ import { FlockingBirds } from "./FlockingBirds";
 import { AuroraWaves } from "./AuroraWaves";
 import { TessellationPattern } from "./TessellationPattern";
 import { CosmicDust } from "./CosmicDust";
+import { SpaceDebris } from "./SpaceDebris";
+import { NeuralPulse } from "./NeuralPulse";
+import { DigitalRain } from "./DigitalRain";
+import { ElectromagneticField } from "./ElectromagneticField";
+import { CyberCircuit } from "./CyberCircuit";
+import { ParticlePhysics } from "./ParticlePhysics";
+import { QuantumEntanglement } from "./QuantumEntanglement";
 import { Play, Eye, Download, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -125,6 +132,20 @@ export function EffectCard({ title, description, category, preview, className, s
         return <TessellationPattern />;
       case "Cosmic Dust":
         return <CosmicDust />;
+      case "Space Debris":
+        return <SpaceDebris />;
+      case "Neural Pulse":
+        return <NeuralPulse />;
+      case "Digital Rain":
+        return <DigitalRain />;
+      case "Electromagnetic Field":
+        return <ElectromagneticField />;
+      case "Cyber Circuit":
+        return <CyberCircuit />;
+      case "Particle Physics":
+        return <ParticlePhysics />;
+      case "Quantum Entanglement":
+        return <QuantumEntanglement />;
       default:
         // Fallback based on category
         if (category === "Plasma Effects") return <PlasmaEffect intensity={0.8} speed={1.2} />;
@@ -181,7 +202,14 @@ export function EffectCard({ title, description, category, preview, className, s
       "Flocking Birds": "FlockingBirds",
       "Aurora Waves": "AuroraWaves",
       "Tessellation": "TessellationPattern",
-      "Cosmic Dust": "CosmicDust"
+      "Cosmic Dust": "CosmicDust",
+      "Space Debris": "SpaceDebris",
+      "Neural Pulse": "NeuralPulse",
+      "Digital Rain": "DigitalRain",
+      "Electromagnetic Field": "ElectromagneticField",
+      "Cyber Circuit": "CyberCircuit",
+      "Particle Physics": "ParticlePhysics",
+      "Quantum Entanglement": "QuantumEntanglement"
     };
 
     const componentName = componentMap[title] || "PlasmaEffect";

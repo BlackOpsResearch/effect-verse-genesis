@@ -218,6 +218,41 @@ const allEffectsData = [
     title: "Cosmic Dust",
     description: "Cosmic dust particles with gravitational waves and nebula formation effects.",
     category: "Simulation"
+  },
+  {
+    title: "Space Debris",
+    description: "Realistic space debris field with metallic fragments rotating and drifting through cosmic void.",
+    category: "Space Sim"
+  },
+  {
+    title: "Neural Pulse",
+    description: "Interconnected neural network with pulsing synaptic connections and brain-like activity patterns.",
+    category: "Neuroscience"
+  },
+  {
+    title: "Digital Rain",
+    description: "Cascading digital characters creating matrix-style rain effect with glowing trails.",
+    category: "Cyberpunk"
+  },
+  {
+    title: "Electromagnetic Field",
+    description: "Visualized electromagnetic field lines with dynamic flux and magnetic interference patterns.",
+    category: "Advanced Physics"
+  },
+  {
+    title: "Cyber Circuit",
+    description: "Electronic circuit board with flowing data signals and pulsing component connections.",
+    category: "Electronics"
+  },
+  {
+    title: "Particle Physics",
+    description: "Realistic particle physics simulation with gravity, collisions, and momentum conservation.",
+    category: "Advanced Physics"
+  },
+  {
+    title: "Quantum Entanglement",
+    description: "Quantum particles with entangled states, spin correlations, and uncertainty principle visualization.",
+    category: "Quantum"
   }
 ];
 
@@ -233,7 +268,13 @@ const categories = [
   "Abstract",
   "Simulation",
   "Particles",
-  "Weather"
+  "Weather",
+  "Space Sim",
+  "Neuroscience",
+  "Cyberpunk",
+  "Advanced Physics",
+  "Electronics",
+  "Quantum"
 ];
 
 export function EffectsShowcase() {
