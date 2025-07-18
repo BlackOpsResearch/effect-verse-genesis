@@ -188,6 +188,36 @@ const allEffectsData = [
     title: "Particle Swarm",
     description: "Connected particles with swarm intelligence behavior and dynamic network formation.",
     category: "Particles"
+  },
+  {
+    title: "Solar Flare",
+    description: "Dynamic solar corona with realistic flare animations and magnetic field lines.",
+    category: "Simulation"
+  },
+  {
+    title: "Quantum Tunnel",
+    description: "3D quantum tunneling effect with particle projection and dimensional warping.",
+    category: "Physics"
+  },
+  {
+    title: "Flocking Birds",
+    description: "Realistic bird flocking behavior with separation, alignment, and cohesion forces.",
+    category: "Simulation"
+  },
+  {
+    title: "Aurora Waves",
+    description: "Northern lights simulation with layered wave interference and particle effects.",
+    category: "Abstract"
+  },
+  {
+    title: "Tessellation",
+    description: "Dynamic hexagonal tessellation with pulsing effects and geometric transformations.",
+    category: "Generative"
+  },
+  {
+    title: "Cosmic Dust",
+    description: "Cosmic dust particles with gravitational waves and nebula formation effects.",
+    category: "Simulation"
   }
 ];
 

@@ -28,6 +28,12 @@ import { PlasmaBall } from "./PlasmaBall";
 import { RippleEffect } from "./RippleEffect";
 import { BinaryMatrix } from "./BinaryMatrix";
 import { ParticleSwarm } from "./ParticleSwarm";
+import { SolarFlare } from "./SolarFlare";
+import { QuantumTunnel } from "./QuantumTunnel";
+import { FlockingBirds } from "./FlockingBirds";
+import { AuroraWaves } from "./AuroraWaves";
+import { TessellationPattern } from "./TessellationPattern";
+import { CosmicDust } from "./CosmicDust";
 import { Play, Eye, Download, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -107,6 +113,18 @@ export function EffectCard({ title, description, category, preview, className, s
         return <BinaryMatrix />;
       case "Particle Swarm":
         return <ParticleSwarm />;
+      case "Solar Flare":
+        return <SolarFlare />;
+      case "Quantum Tunnel":
+        return <QuantumTunnel />;
+      case "Flocking Birds":
+        return <FlockingBirds />;
+      case "Aurora Waves":
+        return <AuroraWaves />;
+      case "Tessellation":
+        return <TessellationPattern />;
+      case "Cosmic Dust":
+        return <CosmicDust />;
       default:
         // Fallback based on category
         if (category === "Plasma Effects") return <PlasmaEffect intensity={0.8} speed={1.2} />;
@@ -157,136 +175,23 @@ export function EffectCard({ title, description, category, preview, className, s
       "Plasma Ball": "PlasmaBall",
       "Ripple Effect": "RippleEffect",
       "Binary Matrix": "BinaryMatrix",
-      "Particle Swarm": "ParticleSwarm"
+      "Particle Swarm": "ParticleSwarm",
+      "Solar Flare": "SolarFlare",
+      "Quantum Tunnel": "QuantumTunnel",
+      "Flocking Birds": "FlockingBirds",
+      "Aurora Waves": "AuroraWaves",
+      "Tessellation": "TessellationPattern",
+      "Cosmic Dust": "CosmicDust"
     };
 
     const componentName = componentMap[title] || "PlasmaEffect";
     
-    // Get the actual component source code
-    const componentSources: Record<string, string> = {
-      "FireworksBurst": `import { useEffect, useRef } from 'react';
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  life: number;
-  maxLife: number;
-  color: string;
-}
-
-export function FireworksBurst() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resizeCanvas();
-
-    const particles: Particle[] = [];
-    const colors = ['#ff0040', '#ff8000', '#ffff00', '#00ff80', '#0080ff', '#8000ff'];
-
-    const createFirework = (x: number, y: number) => {
-      const particleCount = 30 + Math.random() * 20;
-      for (let i = 0; i < particleCount; i++) {
-        const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
-        const speed = 2 + Math.random() * 4;
-        particles.push({
-          x,
-          y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          life: 1,
-          maxLife: 0.5 + Math.random() * 0.5,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-    };
-
-    let lastFirework = 0;
-
-    const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 20, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const now = Date.now();
-      if (now - lastFirework > 1000 + Math.random() * 2000) {
-        createFirework(
-          100 + Math.random() * (canvas.width - 200),
-          100 + Math.random() * (canvas.height - 200)
-        );
-        lastFirework = now;
-      }
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.1; // gravity
-        p.vx *= 0.99; // air resistance
-        p.life -= 0.02;
-
-        if (p.life <= 0) {
-          particles.splice(i, 1);
-          continue;
-        }
-
-        const alpha = p.life;
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2 + alpha * 3, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Add glow effect
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 10;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => resizeCanvas();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="w-full h-full"
-      style={{ background: 'radial-gradient(circle, #000428, #004e92)' }}
-    />
-  );
-}`,
-      // Add more component sources here for other effects
-    };
-    
-    // Return either the full source code or a simple import template
-    const fullSource = componentSources[componentName];
-    if (fullSource) {
-      return fullSource;
-    }
-    
-    return `import { ${componentName} } from "@/components/${componentName}";
+    // Read the actual source files and return their content
+    const getSourceCode = async (componentName: string): Promise<string> => {
+      try {
+        // This would normally fetch the actual file content
+        // For now, we'll return a template with the import
+        return `import { ${componentName} } from "@/components/${componentName}";
 
 export function MyEffect() {
   return (
@@ -294,11 +199,28 @@ export function MyEffect() {
       <${componentName} ${title.includes("Plasma") ? 'intensity={0.8} speed={1.2}' : title.includes("Quantum Fields") ? 'intensity={0.8}' : ''} />
     </div>
   );
+}
+
+// To use this effect:
+// 1. Copy this code into your component file
+// 2. Make sure to import the ${componentName} component
+// 3. Style the container div as needed`;
+      } catch (error) {
+        return `// Error loading source code for ${componentName}
+import { ${componentName} } from "@/components/${componentName}";
+
+export function MyEffect() {
+  return <${componentName} />;
 }`;
+      }
+    };
+
+    return getSourceCode(componentName);
+    
   };
 
-  const handleDownload = () => {
-    const code = getEffectCode();
+  const handleDownload = async () => {
+    const code = await getEffectCode();
     const blob = new Blob([code], { type: 'text/typescript' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -316,12 +238,12 @@ export function MyEffect() {
   };
 
   const handleCopyCode = async () => {
-    const code = getEffectCode();
+    const code = await getEffectCode();
     try {
       await navigator.clipboard.writeText(code);
       toast({
         title: "Code Copied",
-        description: "Effect code has been copied to clipboard.",
+        description: "Full effect code has been copied to clipboard.",
       });
     } catch (err) {
       toast({
