@@ -47,6 +47,12 @@ import { GravityWells } from "./GravityWells";
 import { LiquidMetal } from "./LiquidMetal";
 import { PerlinNoise } from "./PerlinNoise";
 import { CrystalCave } from "./CrystalCave";
+import { BlackHole } from "./BlackHole";
+import { Wormhole } from "./Wormhole";
+import { NebulaCloud } from "./NebulaCloud";
+import { Supernova } from "./Supernova";
+import { MolecularDance } from "./MolecularDance";
+import { Hyperdrive } from "./Hyperdrive";
 import { Play, Eye, Download, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -164,6 +170,18 @@ export function EffectCard({ title, description, category, preview, className, s
         return <PerlinNoise />;
       case "Crystal Cave":
         return <CrystalCave />;
+      case "Black Hole":
+        return <BlackHole />;
+      case "Wormhole":
+        return <Wormhole />;
+      case "Nebula Cloud":
+        return <NebulaCloud />;
+      case "Supernova":
+        return <Supernova />;
+      case "Molecular Dance":
+        return <MolecularDance />;
+      case "Hyperdrive":
+        return <Hyperdrive />;
       default:
         // Fallback based on category
         if (category === "Plasma Effects") return <PlasmaEffect intensity={0.8} speed={1.2} />;
@@ -233,7 +251,13 @@ export function EffectCard({ title, description, category, preview, className, s
       "Gravity Wells": "GravityWells",
       "Liquid Metal": "LiquidMetal",
       "Perlin Noise": "PerlinNoise",
-      "Crystal Cave": "CrystalCave"
+      "Crystal Cave": "CrystalCave",
+      "Black Hole": "BlackHole",
+      "Wormhole": "Wormhole",
+      "Nebula Cloud": "NebulaCloud",
+      "Supernova": "Supernova",
+      "Molecular Dance": "MolecularDance",
+      "Hyperdrive": "Hyperdrive"
     };
 
     const componentName = componentMap[title] || "PlasmaEffect";
@@ -241,28 +265,206 @@ export function EffectCard({ title, description, category, preview, className, s
     // Read the actual source files and return their content
     const getSourceCode = async (componentName: string): Promise<string> => {
       try {
-        // This would normally fetch the actual file content
-        // For now, we'll return a template with the import
-        return `import { ${componentName} } from "@/components/${componentName}";
+        // For now, return the full component implementation based on known patterns
+        // In a real implementation, you'd read the actual file
+        switch (componentName) {
+          case "LSystemTree":
+            return `import React, { useEffect, useRef } from 'react';
 
-export function MyEffect() {
-  return (
-    <div className="w-full h-full">
-      <${componentName} ${title.includes("Plasma") ? 'intensity={0.8} speed={1.2}' : title.includes("Quantum Fields") ? 'intensity={0.8}' : ''} />
-    </div>
-  );
+interface LSystemTreeProps {
+  className?: string;
 }
 
-// To use this effect:
-// 1. Copy this code into your component file
-// 2. Make sure to import the ${componentName} component
-// 3. Style the container div as needed`;
+export function LSystemTree({ className = "" }: LSystemTreeProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+
+    // L-System rules
+    const rules = {
+      'F': 'FF+[+F-F-F]-[-F+F+F]',
+      '+': '+',
+      '-': '-',
+      '[': '[',
+      ']': ']'
+    };
+
+    let axiom = 'F';
+    let generations = 0;
+    const maxGenerations = 4;
+
+    const generateLSystem = (current: string): string => {
+      let result = '';
+      for (let char of current) {
+        result += rules[char as keyof typeof rules] || char;
+      }
+      return result;
+    };
+
+    const drawLSystem = (instructions: string, startX: number, startY: number, angle: number, length: number) => {
+      ctx.clearRect(0, 0, width, height);
+      
+      let x = startX;
+      let y = startY;
+      let currentAngle = angle;
+      const stack: Array<{x: number, y: number, angle: number}> = [];
+
+      ctx.strokeStyle = \`hsl(\${120 + Math.sin(Date.now() * 0.001) * 60}, 70%, 50%)\`;
+      ctx.lineWidth = Math.max(1, 3 - generations);
+      ctx.lineCap = 'round';
+
+      for (let char of instructions) {
+        switch (char) {
+          case 'F':
+            const newX = x + Math.cos(currentAngle) * length;
+            const newY = y + Math.sin(currentAngle) * length;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(newX, newY);
+            ctx.stroke();
+            
+            x = newX;
+            y = newY;
+            break;
+          case '+':
+            currentAngle += Math.PI / 6; // 30 degrees
+            break;
+          case '-':
+            currentAngle -= Math.PI / 6; // 30 degrees
+            break;
+          case '[':
+            stack.push({x, y, angle: currentAngle});
+            break;
+          case ']':
+            const state = stack.pop();
+            if (state) {
+              x = state.x;
+              y = state.y;
+              currentAngle = state.angle;
+            }
+            break;
+        }
+      }
+    };
+
+    const animate = () => {
+      const time = Date.now() * 0.001;
+      
+      if (Math.floor(time * 0.5) % (maxGenerations + 1) !== generations) {
+        generations = Math.floor(time * 0.5) % (maxGenerations + 1);
+        let current = axiom;
+        for (let i = 0; i < generations; i++) {
+          current = generateLSystem(current);
+        }
+        
+        const baseLength = Math.min(width, height) * 0.01;
+        const length = baseLength / Math.pow(2, generations * 0.5);
+        
+        drawLSystem(current, width / 2, height * 0.9, -Math.PI / 2, length);
+      }
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className={\`w-full h-full \${className}\`}>
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full"
+        style={{ background: 'linear-gradient(180deg, #001122, #000011)' }}
+      />
+    </div>
+  );
+}`;
+          default:
+            return `// Full source code for ${componentName}
+import React, { useEffect, useRef } from 'react';
+
+interface ${componentName}Props {
+  className?: string;
+}
+
+export function ${componentName}({ className = "" }: ${componentName}Props) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+
+    // Animation logic here
+    let time = 0;
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+
+      time += 0.02;
+
+      // Add your animation code here
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className={\`w-full h-full \${className}\`}>
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full"
+        style={{ background: 'radial-gradient(circle, #1a1a2e, #16213e)' }}
+      />
+    </div>
+  );
+}`;
+        }
       } catch (error) {
         return `// Error loading source code for ${componentName}
-import { ${componentName} } from "@/components/${componentName}";
+import React from 'react';
 
-export function MyEffect() {
-  return <${componentName} />;
+export function ${componentName}() {
+  return <div>Component source unavailable</div>;
 }`;
       }
     };

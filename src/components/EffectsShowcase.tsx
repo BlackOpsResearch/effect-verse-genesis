@@ -283,6 +283,36 @@ const allEffectsData = [
     title: "Crystal Cave",
     description: "Crystalline formations with faceted geometry and light refraction effects.",
     category: "3D Math"
+  },
+  {
+    title: "Black Hole",
+    description: "Gravitational singularity with particle spiraling and event horizon visualization.",
+    category: "Space"
+  },
+  {
+    title: "Wormhole",
+    description: "Theoretical space-time tunnel with ring distortions and dimensional warping effects.",
+    category: "Space"
+  },
+  {
+    title: "Nebula Cloud",
+    description: "Gaseous stellar nursery with multi-layered particle clouds and cosmic dust.",
+    category: "Space"
+  },
+  {
+    title: "Supernova",
+    description: "Stellar explosion with expanding shockwave and high-energy particle ejection.",
+    category: "Space"
+  },
+  {
+    title: "Molecular Dance",
+    description: "Chemical bonding visualization with atomic interactions and molecular dynamics.",
+    category: "Chemistry"
+  },
+  {
+    title: "Hyperdrive",
+    description: "Faster-than-light travel effect with stellar motion blur and space-time distortion.",
+    category: "Space"
   }
 ];
 
@@ -304,7 +334,9 @@ const categories = [
   "Cyberpunk",
   "Advanced Physics",
   "Electronics",
-  "Quantum"
+  "Quantum",
+  "Space",
+  "Chemistry"
 ];
 
 export function EffectsShowcase() {
