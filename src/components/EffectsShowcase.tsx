@@ -253,6 +253,36 @@ const allEffectsData = [
     title: "Quantum Entanglement",
     description: "Quantum particles with entangled states, spin correlations, and uncertainty principle visualization.",
     category: "Quantum"
+  },
+  {
+    title: "Magnetic Field",
+    description: "Electromagnetic field lines with charged particle interactions and dynamic force visualization.",
+    category: "Physics"
+  },
+  {
+    title: "Fiber Optics",
+    description: "Light pulse transmission through optical fibers with wave guides and total internal reflection.",
+    category: "Physics"
+  },
+  {
+    title: "Gravity Wells",
+    description: "Gravitational field visualization with space-time curvature and particle orbital mechanics.",
+    category: "Physics"
+  },
+  {
+    title: "Liquid Metal",
+    description: "Fluid metallic surface simulation with surface tension and metaball dynamics.",
+    category: "Simulation"
+  },
+  {
+    title: "Perlin Noise",
+    description: "Procedural noise generation with multi-octave patterns and organic textures.",
+    category: "Generative"
+  },
+  {
+    title: "Crystal Cave",
+    description: "Crystalline formations with faceted geometry and light refraction effects.",
+    category: "3D Math"
   }
 ];
 

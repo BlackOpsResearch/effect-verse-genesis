@@ -41,6 +41,12 @@ import { ElectromagneticField } from "./ElectromagneticField";
 import { CyberCircuit } from "./CyberCircuit";
 import { ParticlePhysics } from "./ParticlePhysics";
 import { QuantumEntanglement } from "./QuantumEntanglement";
+import { MagneticField } from "./MagneticField";
+import { FiberOptics } from "./FiberOptics";
+import { GravityWells } from "./GravityWells";
+import { LiquidMetal } from "./LiquidMetal";
+import { PerlinNoise } from "./PerlinNoise";
+import { CrystalCave } from "./CrystalCave";
 import { Play, Eye, Download, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -146,6 +152,18 @@ export function EffectCard({ title, description, category, preview, className, s
         return <ParticlePhysics />;
       case "Quantum Entanglement":
         return <QuantumEntanglement />;
+      case "Magnetic Field":
+        return <MagneticField />;
+      case "Fiber Optics":
+        return <FiberOptics />;
+      case "Gravity Wells":
+        return <GravityWells />;
+      case "Liquid Metal":
+        return <LiquidMetal />;
+      case "Perlin Noise":
+        return <PerlinNoise />;
+      case "Crystal Cave":
+        return <CrystalCave />;
       default:
         // Fallback based on category
         if (category === "Plasma Effects") return <PlasmaEffect intensity={0.8} speed={1.2} />;
@@ -209,7 +227,13 @@ export function EffectCard({ title, description, category, preview, className, s
       "Electromagnetic Field": "ElectromagneticField",
       "Cyber Circuit": "CyberCircuit",
       "Particle Physics": "ParticlePhysics",
-      "Quantum Entanglement": "QuantumEntanglement"
+      "Quantum Entanglement": "QuantumEntanglement",
+      "Magnetic Field": "MagneticField",
+      "Fiber Optics": "FiberOptics",
+      "Gravity Wells": "GravityWells",
+      "Liquid Metal": "LiquidMetal",
+      "Perlin Noise": "PerlinNoise",
+      "Crystal Cave": "CrystalCave"
     };
 
     const componentName = componentMap[title] || "PlasmaEffect";
@@ -286,8 +310,11 @@ export function MyEffect() {
     <Card className={`glass glass-hover electric-border p-6 group ${className}`} style={style}>
       {/* Preview Area */}
       <div className="relative aspect-video bg-gradient-to-br from-background to-muted rounded-lg mb-4 overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 group-hover:block hidden">
           {getEffectComponent()}
+        </div>
+        <div className="absolute inset-0 group-hover:hidden flex items-center justify-center">
+          <div className="text-muted-foreground text-sm">Hover to preview</div>
         </div>
         
         {/* Overlay controls */}
