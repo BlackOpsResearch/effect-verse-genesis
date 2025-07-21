@@ -1,115 +1,156 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  hue: number;
-  connections: number[];
-}
-
-export function ParticleSwarm() {
+export const ParticleSwarm = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resizeCanvas();
+    canvas.width = 400;
+    canvas.height = 300;
+
+    interface Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      ax: number;
+      ay: number;
+      hue: number;
+      size: number;
+    }
 
     const particles: Particle[] = [];
-    const particleCount = 80;
-    const maxDistance = 120;
+    const numParticles = 80;
+    let animationId: number;
 
     // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < numParticles; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 2,
         vy: (Math.random() - 0.5) * 2,
+        ax: 0,
+        ay: 0,
         hue: Math.random() * 360,
-        connections: []
+        size: Math.random() * 3 + 1
       });
     }
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(10, 10, 30, 0.1)';
+      if (!isHovered) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
+      }
+
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Update particles
-      particles.forEach(particle => {
+      particles.forEach((particle, i) => {
+        // Reset acceleration
+        particle.ax = 0;
+        particle.ay = 0;
+
+        // Swarm behavior
+        particles.forEach((other, j) => {
+          if (i === j) return;
+
+          const dx = other.x - particle.x;
+          const dy = other.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance > 0 && distance < 50) {
+            // Cohesion and alignment
+            const force = 0.0002;
+            particle.ax += dx * force;
+            particle.ay += dy * force;
+
+            // Separation
+            if (distance < 20) {
+              const separationForce = 0.001;
+              particle.ax -= dx * separationForce;
+              particle.ay -= dy * separationForce;
+            }
+          }
+        });
+
+        // Center attraction
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const centerDx = centerX - particle.x;
+        const centerDy = centerY - particle.y;
+        particle.ax += centerDx * 0.00005;
+        particle.ay += centerDy * 0.00005;
+
+        // Update velocity and position
+        particle.vx += particle.ax;
+        particle.vy += particle.ay;
+        
+        // Damping
+        particle.vx *= 0.99;
+        particle.vy *= 0.99;
+
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Bounce off walls
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        // Boundary wrapping
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
 
-        // Keep particles in bounds
-        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+        // Draw particle
+        ctx.fillStyle = `hsl(${particle.hue}, 80%, 60%)`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
 
-        particle.hue += 0.5;
-        if (particle.hue > 360) particle.hue = 0;
-      });
+        // Draw connections
+        particles.forEach((other, j) => {
+          if (i >= j) return;
+          const dx = other.x - particle.x;
+          const dy = other.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Draw connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const p1 = particles[i];
-          const p2 = particles[j];
-          const distance = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
-
-          if (distance < maxDistance) {
-            const alpha = 1 - (distance / maxDistance);
-            ctx.strokeStyle = `hsla(${(p1.hue + p2.hue) / 2}, 100%, 60%, ${alpha * 0.3})`;
-            ctx.lineWidth = alpha * 2;
+          if (distance < 50) {
+            ctx.strokeStyle = `hsla(${(particle.hue + other.hue) / 2}, 70%, 50%, ${1 - distance / 50})`;
+            ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(other.x, other.y);
             ctx.stroke();
           }
-        }
-      }
+        });
 
-      // Draw particles
-      particles.forEach(particle => {
-        ctx.fillStyle = `hsl(${particle.hue}, 100%, 60%)`;
-        ctx.shadowColor = `hsl(${particle.hue}, 100%, 60%)`;
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        particle.hue += 0.5;
       });
 
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
-    animate();
-
-    const handleResize = () => resizeCanvas();
-    window.addEventListener('resize', handleResize);
+    if (isHovered) {
+      animate();
+    }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
-  }, []);
+  }, [isHovered]);
 
   return (
     <canvas
       ref={canvasRef}
       className="w-full h-full"
-      style={{ background: 'linear-gradient(135deg, #0a0a1e, #1a1a3e)' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     />
   );
-}
+};

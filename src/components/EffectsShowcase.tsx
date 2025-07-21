@@ -2,6 +2,11 @@ import { useState } from "react";
 import { EffectCard } from "./EffectCard";
 import { ElectricButton } from "./ElectricButton";
 import { Grid3X3, Filter, Sparkles } from "lucide-react";
+import { DNAHelix } from "./DNAHelix";
+import { ParticleSwarm } from "./ParticleSwarm";
+import { ParticleGravity } from "./ParticleGravity";
+import { FractalMandelbrot } from "./FractalMandelbrot";
+import { ElectricWeb } from "./ElectricWeb";
 
 const allEffectsData = [
   {
@@ -313,6 +318,31 @@ const allEffectsData = [
     title: "Hyperdrive",
     description: "Faster-than-light travel effect with stellar motion blur and space-time distortion.",
     category: "Space"
+  },
+  {
+    title: "Crystal Grid",
+    description: "Hexagonal crystal formations with pulsing geometric patterns and prismatic light effects.",
+    category: "3D Math"
+  },
+  {
+    title: "Flow Field",
+    description: "Particle flow visualization following dynamic vector field patterns with organic motion.",
+    category: "Physics"
+  },
+  {
+    title: "Vortex Field",
+    description: "Dual vortex system with particle spiraling and fluid dynamics visualization.",
+    category: "Physics"
+  },
+  {
+    title: "Laser Grid",
+    description: "Cyberpunk laser grid with pulsing nodes and traveling energy pulses.",
+    category: "Cyberpunk"
+  },
+  {
+    title: "Quantum Wave",
+    description: "Quantum mechanics visualization with wave functions and probability clouds.",
+    category: "Quantum"
   }
 ];
 
