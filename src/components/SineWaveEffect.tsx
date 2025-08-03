@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function SineWaveEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,6 +20,11 @@ export function SineWaveEffect() {
     ];
 
     const animate = () => {
+      if (!isHovered) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      
       time += 1;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -56,14 +62,20 @@ export function SineWaveEffect() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [isHovered]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={200}
-      className="absolute inset-0 w-full h-full opacity-70"
-    />
+    <div 
+      className="absolute inset-0 w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={200}
+        className="absolute inset-0 w-full h-full opacity-70"
+      />
+    </div>
   );
 }

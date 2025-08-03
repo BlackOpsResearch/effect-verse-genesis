@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function CyberGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,6 +56,11 @@ export function CyberGrid() {
     let time = 0;
 
     const animate = () => {
+      if (!isHovered) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
       time += 0.02;
 
@@ -89,13 +95,19 @@ export function CyberGrid() {
     return () => {
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, []);
+  }, [isHovered]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full opacity-30"
-      style={{ background: 'transparent' }}
-    />
+    <div 
+      className="absolute inset-0 w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full opacity-30"
+        style={{ background: 'transparent' }}
+      />
+    </div>
   );
 }

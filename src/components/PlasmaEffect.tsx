@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface PlasmaConfig {
   intensity?: number;
@@ -17,6 +17,7 @@ export function PlasmaEffect({
 }: PlasmaConfig) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,6 +31,11 @@ export function PlasmaEffect({
     const height = canvas.height;
 
     const animate = () => {
+      if (!isHovered) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      
       time += 0.02 * speed;
 
       const imageData = ctx.createImageData(width, height);
@@ -73,14 +79,20 @@ export function PlasmaEffect({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [intensity, speed, color1, color2, color3]);
+  }, [intensity, speed, color1, color2, color3, isHovered]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={200}
-      height={200}
-      className="absolute inset-0 w-full h-full opacity-60 mix-blend-screen"
-    />
+    <div 
+      className="absolute inset-0 w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <canvas
+        ref={canvasRef}
+        width={200}
+        height={200}
+        className="absolute inset-0 w-full h-full opacity-60 mix-blend-screen"
+      />
+    </div>
   );
 }

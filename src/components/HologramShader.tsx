@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function HologramShader() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -38,6 +39,11 @@ export function HologramShader() {
     }
 
     const animate = () => {
+      if (!isHovered) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
       time += 0.02;
 
@@ -83,13 +89,19 @@ export function HologramShader() {
     return () => {
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, []);
+  }, [isHovered]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full opacity-60 mix-blend-screen"
-      style={{ background: 'transparent' }}
-    />
+    <div 
+      className="absolute inset-0 w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full opacity-60 mix-blend-screen"
+        style={{ background: 'transparent' }}
+      />
+    </div>
   );
 }

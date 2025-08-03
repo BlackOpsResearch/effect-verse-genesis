@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function LSystemTree() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -82,12 +83,16 @@ export function LSystemTree() {
     };
 
     const animate = () => {
+      if (!isHovered) return;
+      
       generation++;
       if (generation < 5) {
         currentString = generateLSystem();
         setTimeout(() => {
-          drawLSystem(currentString, canvas.width / 2, canvas.height - 20);
-          setTimeout(animate, 2000);
+          if (isHovered) {
+            drawLSystem(currentString, canvas.width / 2, canvas.height - 20);
+            setTimeout(animate, 2000);
+          }
         }, 500);
       } else {
         // Reset
@@ -97,17 +102,25 @@ export function LSystemTree() {
       }
     };
 
-    drawLSystem(currentString, canvas.width / 2, canvas.height - 20);
-    setTimeout(animate, 2000);
+    if (isHovered) {
+      drawLSystem(currentString, canvas.width / 2, canvas.height - 20);
+      setTimeout(animate, 2000);
+    }
 
-  }, []);
+  }, [isHovered]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={300}
-      height={300}
-      className="absolute inset-0 w-full h-full opacity-80"
-    />
+    <div 
+      className="absolute inset-0 w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <canvas
+        ref={canvasRef}
+        width={300}
+        height={300}
+        className="absolute inset-0 w-full h-full opacity-80"
+      />
+    </div>
   );
 }

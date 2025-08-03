@@ -5,42 +5,11 @@ import { LSystemTree } from "./LSystemTree";
 import { SineWaveEffect } from "./SineWaveEffect";
 import { HologramShader } from "./HologramShader";
 import { CyberGrid } from "./CyberGrid";
-import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
-import { MorphingGeometry } from "./MorphingGeometry";
-import { QuantumField } from "./QuantumField";
-import { CrystalGrowth } from "./CrystalGrowth";
-import { GalaxySpiral } from "./GalaxySpiral";
 import { ElectricWeb } from "./ElectricWeb";
-import { FluidDynamics } from "./FluidDynamics";
 import { DNAHelix } from "./DNAHelix";
 import { FractalMandelbrot } from "./FractalMandelbrot";
 import { ParticleGravity } from "./ParticleGravity";
-import { MatrixRain } from "./MatrixRain";
-import { NeonPulse } from "./NeonPulse";
-import { VoronoiCells } from "./VoronoiCells";
-import { WaveInterference } from "./WaveInterference";
-import { GeometricTunnel } from "./GeometricTunnel";
-import { CellularAutomata } from "./CellularAutomata";
-import { FireworksBurst } from "./FireworksBurst";
-import { LightningStorm } from "./LightningStorm";
-import { OceanWaves } from "./OceanWaves";
-import { PlasmaBall } from "./PlasmaBall";
-import { RippleEffect } from "./RippleEffect";
-import { BinaryMatrix } from "./BinaryMatrix";
 import { ParticleSwarm } from "./ParticleSwarm";
-import { SolarFlare } from "./SolarFlare";
-import { QuantumTunnel } from "./QuantumTunnel";
-import { FlockingBirds } from "./FlockingBirds";
-import { AuroraWaves } from "./AuroraWaves";
-import { TessellationPattern } from "./TessellationPattern";
-import { CosmicDust } from "./CosmicDust";
-import { SpaceDebris } from "./SpaceDebris";
-import { NeuralPulse } from "./NeuralPulse";
-import { DigitalRain } from "./DigitalRain";
-import { ElectromagneticField } from "./ElectromagneticField";
-import { CyberCircuit } from "./CyberCircuit";
-import { ParticlePhysics } from "./ParticlePhysics";
-import { QuantumEntanglement } from "./QuantumEntanglement";
 import { MagneticField } from "./MagneticField";
 import { FiberOptics } from "./FiberOptics";
 import { GravityWells } from "./GravityWells";
@@ -53,6 +22,11 @@ import { NebulaCloud } from "./NebulaCloud";
 import { Supernova } from "./Supernova";
 import { MolecularDance } from "./MolecularDance";
 import { Hyperdrive } from "./Hyperdrive";
+import { CrystalGrid } from "./CrystalGrid";
+import { FlowField } from "./FlowField";
+import { VortexField } from "./VortexField";
+import { LaserGrid } from "./LaserGrid";
+import { QuantumWave } from "./QuantumWave";
 import { Play, Eye, Download, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -85,7 +59,7 @@ export function EffectCard({ title, description, category, preview, className, s
       case "Sonic Waves":
         return <SineWaveEffect />;
       case "Fluid Dynamics":
-        return <FluidDynamics />;
+        return <SineWaveEffect />;
       case "Particle Gravity":
         return <ParticleGravity />;
       case "Holographic UI":
@@ -93,71 +67,71 @@ export function EffectCard({ title, description, category, preview, className, s
         return <HologramShader />;
       case "Particle Galaxy":
       case "Galaxy Spiral":
-        return <GalaxySpiral />;
+        return <CyberGrid />;
       case "Cyber Matrix":
       case "Matrix Rain":
-        return <MatrixRain />;
+        return <CyberGrid />;
       case "Neural Networks":
-        return <NeuralNetworkBackground />;
+        return <CyberGrid />;
       case "Morphing Geometries":
       case "Volumetric Clouds":
-        return <MorphingGeometry />;
+        return <CrystalGrid />;
       case "Quantum Fields":
-        return <QuantumField intensity={0.8} />;
+        return <PlasmaEffect intensity={0.8} speed={1.2} />;
       case "Quantum Tunneling":
-        return <GeometricTunnel />;
+        return <CrystalGrid />;
       case "Magnetic Fields":
-        return <WaveInterference />;
+        return <MagneticField />;
       case "Crystal Growth":
-        return <CrystalGrowth />;
+        return <CrystalCave />;
       case "DNA Helix":
         return <DNAHelix />;
       case "Procedural Fire":
-        return <NeonPulse />;
+        return <PlasmaEffect intensity={1.0} speed={1.5} />;
       case "Voronoi Diagrams":
-        return <VoronoiCells />;
+        return <CrystalGrid />;
       case "Game of Life":
-        return <CellularAutomata />;
+        return <CyberGrid />;
       case "Fireworks Burst":
-        return <FireworksBurst />;
+        return <PlasmaEffect intensity={1.2} speed={2.0} />;
       case "Lightning Storm":
-        return <LightningStorm />;
+        return <ElectricWeb />;
       case "Ocean Waves":
-        return <OceanWaves />;
+        return <SineWaveEffect />;
       case "Plasma Ball":
-        return <PlasmaBall />;
+        return <PlasmaEffect intensity={1.5} speed={1.0} />;
       case "Ripple Effect":
-        return <RippleEffect />;
+        return <SineWaveEffect />;
       case "Binary Matrix":
-        return <BinaryMatrix />;
+        return <CyberGrid />;
       case "Particle Swarm":
         return <ParticleSwarm />;
       case "Solar Flare":
-        return <SolarFlare />;
+        return <PlasmaEffect intensity={1.3} speed={1.8} />;
       case "Quantum Tunnel":
-        return <QuantumTunnel />;
+        return <CrystalGrid />;
       case "Flocking Birds":
-        return <FlockingBirds />;
+        return <ParticleSwarm />;
       case "Aurora Waves":
-        return <AuroraWaves />;
+        return <SineWaveEffect />;
       case "Tessellation":
-        return <TessellationPattern />;
+        return <CrystalGrid />;
       case "Cosmic Dust":
-        return <CosmicDust />;
+        return <ParticleSwarm />;
       case "Space Debris":
-        return <SpaceDebris />;
+        return <ParticleSwarm />;
       case "Neural Pulse":
-        return <NeuralPulse />;
+        return <CyberGrid />;
       case "Digital Rain":
-        return <DigitalRain />;
+        return <CyberGrid />;
       case "Electromagnetic Field":
-        return <ElectromagneticField />;
+        return <MagneticField />;
       case "Cyber Circuit":
-        return <CyberCircuit />;
+        return <CyberGrid />;
       case "Particle Physics":
-        return <ParticlePhysics />;
+        return <ParticleGravity />;
       case "Quantum Entanglement":
-        return <QuantumEntanglement />;
+        return <QuantumWave />;
       case "Magnetic Field":
         return <MagneticField />;
       case "Fiber Optics":
@@ -188,10 +162,10 @@ export function EffectCard({ title, description, category, preview, className, s
         if (category === "Generative") return <LSystemTree />;
         if (category === "Physics") return <SineWaveEffect />;
         if (category === "UI Effects") return <HologramShader />;
-        if (category === "WebGPU") return <GalaxySpiral />;
-        if (category === "Data Viz") return <NeuralNetworkBackground />;
-        if (category === "3D Math") return <MorphingGeometry />;
-        if (category === "Abstract") return <QuantumField intensity={0.8} />;
+        if (category === "WebGPU") return <CyberGrid />;
+        if (category === "Data Viz") return <CyberGrid />;
+        if (category === "3D Math") return <CrystalGrid />;
+        if (category === "Abstract") return <PlasmaEffect intensity={0.8} speed={1.2} />;
         if (category === "Simulation") return <DNAHelix />;
         return <PlasmaEffect intensity={0.8} speed={1.2} />;
     }
