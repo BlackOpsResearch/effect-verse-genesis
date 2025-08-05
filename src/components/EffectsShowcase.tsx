@@ -343,6 +343,101 @@ const allEffectsData = [
     title: "Quantum Wave",
     description: "Quantum mechanics visualization with wave functions and probability clouds.",
     category: "Quantum"
+  },
+  {
+    title: "Particle Explosion",
+    description: "Spectacular particle explosions with physics-based fireworks and gravity effects.",
+    category: "Particles"
+  },
+  {
+    title: "Light Trails",
+    description: "Glowing light trails with motion blur and dynamic color shifts.",
+    category: "UI Effects"
+  },
+  {
+    title: "Cyber Cells",
+    description: "Cellular network visualization with data packets and connection pulses.",
+    category: "Cyberpunk"
+  },
+  {
+    title: "Fluid Warp",
+    description: "Fluid distortion effects with organic flow patterns and color morphing.",
+    category: "Abstract"
+  },
+  {
+    title: "Storm Clouds",
+    description: "Dynamic storm system with lightning strikes and atmospheric effects.",
+    category: "Weather"
+  },
+  {
+    title: "Fractal Flame",
+    description: "Chaotic fractal flame algorithm with iterative function systems.",
+    category: "Generative"
+  },
+  {
+    title: "Holographic Noise",
+    description: "Holographic interference patterns with scanline glitch effects.",
+    category: "UI Effects"
+  },
+  {
+    title: "Energy Orbs",
+    description: "Floating energy spheres with electromagnetic field interactions.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Data Stream",
+    description: "Flowing binary data streams with matrix-style information cascade.",
+    category: "Data Viz"
+  },
+  {
+    title: "Plasma Vortex",
+    description: "Swirling plasma vortex with electromagnetic field visualization.",
+    category: "Plasma Effects"
+  },
+  {
+    title: "Crystal Resonance",
+    description: "Vibrating crystal structures with harmonic frequency patterns.",
+    category: "3D Math"
+  },
+  {
+    title: "Aurora Borealis",
+    description: "Northern lights simulation with particle interaction in magnetic fields.",
+    category: "Space"
+  },
+  {
+    title: "Quantum Foam",
+    description: "Quantum field fluctuations at the Planck scale with spacetime distortion.",
+    category: "Quantum"
+  },
+  {
+    title: "Neural Fireworks",
+    description: "Brain-inspired neural activity with synaptic bursts and connection networks.",
+    category: "Neuroscience"
+  },
+  {
+    title: "Gravitational Lensing",
+    description: "Light bending around massive objects with Einstein ring formation.",
+    category: "Advanced Physics"
+  },
+  {
+    title: "Molecular Bonds",
+    description: "Chemical molecular bonding with electron orbital visualization.",
+    category: "Chemistry"
+  },
+  {
+    title: "Time Dilation",
+    description: "Relativistic time effects with spacetime curvature visualization.",
+    category: "Advanced Physics"
+  },
+  {
+    title: "Stellar Nursery",
+    description: "Star formation in cosmic gas clouds with gravitational collapse.",
+    category: "Space"
+  },
+  {
+    title: "Quantum Superposition",
+    description: "Multiple quantum states existing simultaneously with probability waves.",
+    category: "Quantum"
   }
 ];
 
