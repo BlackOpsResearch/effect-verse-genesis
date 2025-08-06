@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { LucidLogo } from '@/components/LucidLogo';
 import { BackgroundSelector } from '@/components/BackgroundSelector';
 import { SettingsDrawer } from '@/components/SettingsDrawer';
+import { LogosShowcase } from '@/components/LogosShowcase';
 import { Button } from '@/components/ui/button';
-import { Play, ArrowRight, Sparkles } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Play, ArrowRight, Sparkles, Palette } from 'lucide-react';
 
 // Import effect components
 import { AuroraWaves } from '@/components/AuroraWaves';
@@ -36,6 +38,8 @@ import { GravityWells } from '@/components/GravityWells';
 import { HologramShader } from '@/components/HologramShader';
 import { HolographicNoise } from '@/components/HolographicNoise';
 import { Hyperdrive } from '@/components/Hyperdrive';
+import { Supernova } from '@/components/Supernova';
+import { WormholeTravel } from '@/components/WormholeTravel';
 
 // Background effect mapping
 const backgroundComponents: Record<string, React.ComponentType> = {
@@ -69,6 +73,8 @@ const backgroundComponents: Record<string, React.ComponentType> = {
   'Hologram Shader': HologramShader,
   'Holographic Noise': HolographicNoise,
   'Hyperdrive': Hyperdrive,
+  'Supernova': Supernova,
+  'Wormhole Travel': WormholeTravel,
 };
 
 export default function LandingPage() {
@@ -124,57 +130,78 @@ export default function LandingPage() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 flex items-center justify-center px-6">
-          <div className="text-center max-w-4xl">
-            {/* Style Label */}
-            <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full border border-electric-cyan/30 mb-8">
-              <Sparkles className="w-4 h-4 text-electric-cyan" />
-              <span className="text-sm text-electric-cyan">Current Style: {currentBackground}</span>
-            </div>
+        <main className="flex-1 px-6">
+          <Tabs defaultValue="experience" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 glass">
+              <TabsTrigger value="experience" className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                Experience
+              </TabsTrigger>
+              <TabsTrigger value="logos" className="flex items-center gap-2">
+                <Palette className="w-4 h-4" />
+                Animated Logos
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="experience" className="mt-8">
+              <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="text-center max-w-4xl">
+                  {/* Style Label */}
+                  <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full border border-electric-cyan/30 mb-8">
+                    <Sparkles className="w-4 h-4 text-electric-cyan" />
+                    <span className="text-sm text-electric-cyan">Current Style: {currentBackground}</span>
+                  </div>
 
-            {/* Hero Text */}
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-electric-cyan to-electric-purple bg-clip-text text-transparent">
-              Experience
-              <br />
-              <span className="text-electric">Lucid</span>
-              <br />
-              Dreams
-            </h1>
+                  {/* Hero Text */}
+                  <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-electric-cyan to-electric-purple bg-clip-text text-transparent">
+                    Experience
+                    <br />
+                    <span className="text-electric">Lucid</span>
+                    <br />
+                    Dreams
+                  </h1>
 
-            <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Immerse yourself in mind-bending visual effects. Choose your reality, 
-              customize every detail, and lose yourself in the infinite.
-            </p>
+                  <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+                    Immerse yourself in mind-bending visual effects. Choose your reality, 
+                    customize every detail, and lose yourself in the infinite.
+                  </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="glass glass-hover px-8 py-4 text-lg">
-                <Play className="w-5 h-5 mr-2" />
-                Enter the Experience
-              </Button>
-              
-              <Button variant="outline" size="lg" className="glass glass-hover px-8 py-4 text-lg">
-                <ArrowRight className="w-5 h-5 mr-2" />
-                Explore Effects
-              </Button>
-            </div>
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <Button size="lg" className="glass glass-hover px-8 py-4 text-lg">
+                      <Play className="w-5 h-5 mr-2" />
+                      Enter the Experience
+                    </Button>
+                    
+                    <Button variant="outline" size="lg" className="glass glass-hover px-8 py-4 text-lg">
+                      <ArrowRight className="w-5 h-5 mr-2" />
+                      Explore Effects
+                    </Button>
+                  </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-16 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-electric-cyan mb-2">50+</div>
-                <div className="text-white/60 text-sm">Visual Effects</div>
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-3 gap-8 pt-16 max-w-2xl mx-auto">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-electric-cyan mb-2">50+</div>
+                      <div className="text-white/60 text-sm">Visual Effects</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-electric-purple mb-2">∞</div>
+                      <div className="text-white/60 text-sm">Possibilities</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-electric-green mb-2">Real-time</div>
+                      <div className="text-white/60 text-sm">Rendering</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-electric-purple mb-2">∞</div>
-                <div className="text-white/60 text-sm">Possibilities</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-electric-green mb-2">Real-time</div>
-                <div className="text-white/60 text-sm">Rendering</div>
-              </div>
-            </div>
-          </div>
+            </TabsContent>
+            
+            <TabsContent value="logos" className="mt-8">
+              <LogosShowcase />
+            </TabsContent>
+          </Tabs>
         </main>
 
         {/* Footer */}

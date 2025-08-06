@@ -44,6 +44,8 @@ const backgroundEffects = [
   { name: 'Hologram Shader', icon: Eye, color: 'text-rainbow', gradient: 'from-pink-400 via-purple-400 to-indigo-400' },
   { name: 'Holographic Noise', icon: Grid, color: 'text-cyan-400', gradient: 'from-cyan-400 to-purple-500' },
   { name: 'Hyperdrive', icon: Star, color: 'text-white', gradient: 'from-white to-blue-400' },
+  { name: 'Supernova', icon: Sun, color: 'text-yellow-300', gradient: 'from-yellow-300 to-red-500' },
+  { name: 'Wormhole Travel', icon: Eye, color: 'text-purple-300', gradient: 'from-purple-300 to-blue-400' },
 ];
 
 interface BackgroundSelectorProps {
