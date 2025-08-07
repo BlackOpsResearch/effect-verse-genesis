@@ -38,6 +38,11 @@ import { GravityWells } from '@/components/GravityWells';
 import { HologramShader } from '@/components/HologramShader';
 import { HolographicNoise } from '@/components/HolographicNoise';
 import { Hyperdrive } from '@/components/Hyperdrive';
+import { LaserGrid } from '@/components/LaserGrid';
+import { LightningStorm } from '@/components/LightningStorm';
+import { NebulaCloud } from '@/components/NebulaCloud';
+import { SolarFlare } from '@/components/SolarFlare';
+import { CyberGrid } from '@/components/CyberGrid';
 import { Supernova } from '@/components/Supernova';
 import { WormholeTravel } from '@/components/WormholeTravel';
 
@@ -73,6 +78,11 @@ const backgroundComponents: Record<string, React.ComponentType> = {
   'Hologram Shader': HologramShader,
   'Holographic Noise': HolographicNoise,
   'Hyperdrive': Hyperdrive,
+  'Laser Grid': LaserGrid,
+  'Lightning Storm': LightningStorm,
+  'Nebula Cloud': NebulaCloud,
+  'Solar Flare': SolarFlare,
+  'Cyber Grid': CyberGrid,
   'Supernova': Supernova,
   'Wormhole Travel': WormholeTravel,
 };
