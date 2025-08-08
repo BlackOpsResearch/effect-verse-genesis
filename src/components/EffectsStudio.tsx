@@ -30,10 +30,18 @@ import {
   Brain,
   CircuitBoard
 } from 'lucide-react';
-import { EffectCard } from './EffectCard';
+
 import { usePerformanceMetrics } from '@/hooks/usePerformanceMetrics';
 import { PerformancePanel } from './PerformancePanel';
-
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { AuroraWavesLogo } from './logos/AuroraWavesLogo';
+import { BinaryMatrixLogo } from './logos/BinaryMatrixLogo';
+import { CrystalGrowthLogo } from './logos/CrystalGrowthLogo';
+import { PlasmaEffectLogo } from './logos/PlasmaEffectLogo';
+import { ElectricWebLogo } from './logos/ElectricWebLogo';
+import { ParticleSwarmLogo } from './logos/ParticleSwarmLogo';
+import { FractalMandelbrotLogo } from './logos/FractalMandelbrotLogo';
+import { NeuralNetworkLogo } from './logos/NeuralNetworkLogo';
 // Import all effects
 import { AuroraWaves } from './AuroraWaves';
 import { BinaryMatrix } from './BinaryMatrix';
@@ -104,6 +112,17 @@ import { VortexField } from './VortexField';
 import { WaveInterference } from './WaveInterference';
 import { Wormhole } from './Wormhole';
 import { WormholeTravel } from './WormholeTravel';
+
+const effectLogos: Record<string, any> = {
+  'Aurora Waves': AuroraWavesLogo,
+  'Binary Matrix': BinaryMatrixLogo,
+  'Crystal Growth': CrystalGrowthLogo,
+  'Plasma Effect': PlasmaEffectLogo,
+  'Electric Web': ElectricWebLogo,
+  'Particle Swarm': ParticleSwarmLogo,
+  'Fractal Mandelbrot': FractalMandelbrotLogo,
+  'Neural Network': NeuralNetworkLogo,
+};
 
 const effectCategories = {
   'Particle Systems': {
@@ -347,24 +366,39 @@ export function EffectsStudio() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="grid grid-cols-2 gap-2">
-                          {category.effects.map((effect) => (
-                            <Button
-                              key={effect.name}
-                              variant={activeEffect === effect.name ? "default" : "outline"}
-                              size="sm"
-                              className="h-auto p-2 text-xs"
-                              onClick={() => setActiveEffect(effect.name)}
-                            >
-                              <div className="flex flex-col items-center gap-1">
-                                <Badge 
-                                  variant="secondary" 
-                                  className={`w-2 h-2 p-0 bg-${effect.color}-500`}
-                                />
-                                <span className="text-center leading-tight">{effect.name}</span>
-                              </div>
-                            </Button>
-                          ))}
+                        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-2">
+                          {category.effects.map((effect) => {
+                            const Logo = (effectLogos as any)[effect.name] as React.ComponentType<any> | undefined;
+                            const isActive = activeEffect === effect.name;
+                            const initials = effect.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+                            const hue = effect.name.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+                              <Tooltip key={effect.name}>
+                                <TooltipTrigger asChild>
+                                  <button
+                                    onClick={() => setActiveEffect(effect.name)}
+                                    aria-label={effect.name}
+                                    className={`aspect-square rounded-md border flex items-center justify-center transition-colors ${isActive ? 'ring-2 ring-primary' : ''} hover:bg-muted/40 border-border`}
+                                  >
+                                    {Logo ? (
+                                      <Logo size={40} className="opacity-90" />
+                                    ) : (
+                                      <div
+                                        className="relative w-9 h-9 rounded-md"
+                                        style={{
+                                          background: `linear-gradient(135deg, hsl(${hue} 80% 60%), hsl(${(hue + 60) % 360} 80% 60%))`
+                                        }}
+                                      >
+                                        <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-background/90">
+                                          {initials}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </button>
+                                </TooltipTrigger>
+                                <TooltipContent side="right">{effect.name}</TooltipContent>
+                              </Tooltip>
+                            );
+                          })}
                         </div>
                       </CardContent>
                     </Card>
