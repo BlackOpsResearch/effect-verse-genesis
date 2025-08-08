@@ -42,6 +42,7 @@ import { ElectricWebLogo } from './logos/ElectricWebLogo';
 import { ParticleSwarmLogo } from './logos/ParticleSwarmLogo';
 import { FractalMandelbrotLogo } from './logos/FractalMandelbrotLogo';
 import { NeuralNetworkLogo } from './logos/NeuralNetworkLogo';
+import { EffectLogo } from './logos/EffectLogo';
 // Import all effects
 import { AuroraWaves } from './AuroraWaves';
 import { BinaryMatrix } from './BinaryMatrix';
@@ -358,7 +359,7 @@ export function EffectsStudio() {
                 {Object.entries(effectCategories).map(([categoryName, category]) => {
                   const IconComponent = category.icon;
                   return (
-                    <Card key={categoryName}>
+                    <Card key={categoryName} className="glass bg-background/30 backdrop-blur-md border border-border/50"> 
                       <CardHeader className="pb-3">
                         <CardTitle className="flex items-center gap-2 text-sm">
                           <IconComponent className="w-4 h-4" />
@@ -370,8 +371,6 @@ export function EffectsStudio() {
                           {category.effects.map((effect) => {
                             const Logo = (effectLogos as any)[effect.name] as React.ComponentType<any> | undefined;
                             const isActive = activeEffect === effect.name;
-                            const initials = effect.name.split(' ').map(w => w[0]).join('').slice(0, 2);
-                            const hue = effect.name.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
                             return (
                               <Tooltip key={effect.name}>
                                 <TooltipTrigger asChild>
@@ -383,16 +382,7 @@ export function EffectsStudio() {
                                     {Logo ? (
                                       <Logo size={40} className="opacity-90" />
                                     ) : (
-                                      <div
-                                        className="relative w-9 h-9 rounded-md"
-                                        style={{
-                                          background: `linear-gradient(135deg, hsl(${hue} 80% 60%), hsl(${(hue + 60) % 360} 80% 60%))`
-                                        }}
-                                      >
-                                        <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-background/90">
-                                          {initials}
-                                        </span>
-                                      </div>
+                                      <EffectLogo name={effect.name} size={40} className="opacity-90" />
                                     )}
                                   </button>
                                 </TooltipTrigger>
