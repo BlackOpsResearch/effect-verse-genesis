@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -31,6 +31,8 @@ import {
   CircuitBoard
 } from 'lucide-react';
 import { EffectCard } from './EffectCard';
+import { usePerformanceMetrics } from '@/hooks/usePerformanceMetrics';
+import { PerformancePanel } from './PerformancePanel';
 
 // Import all effects
 import { AuroraWaves } from './AuroraWaves';
@@ -237,6 +239,24 @@ export function EffectsStudio() {
     return <ParticleBackground />;
   };
 
+  const [perfOpen, setPerfOpen] = useState(false);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const metrics = usePerformanceMetrics({ isActive: isPlaying });
+
+  useEffect(() => {
+    const update = () => {
+      const el = canvasRef.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        setCanvasSize({ width: Math.round(rect.width), height: Math.round(rect.height) });
+      }
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
@@ -271,6 +291,21 @@ export function EffectsStudio() {
                 </div>
               </SheetContent>
             </Sheet>
+            <Sheet open={perfOpen} onOpenChange={setPerfOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Monitor className="w-4 h-4" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[28rem]">
+                <SheetHeader>
+                  <SheetTitle>Performance Panel</SheetTitle>
+                </SheetHeader>
+                <div className="mt-4">
+                  <PerformancePanel metrics={metrics} />
+                </div>
+              </SheetContent>
+            </Sheet>
             <Sheet open={chatOpen} onOpenChange={setChatOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -292,7 +327,7 @@ export function EffectsStudio() {
         </div>
 
         {/* Effects Sidebar */}
-        <Sidebar className="w-80 pt-12">
+        <Sidebar collapsible="icon" className="pt-12">
           <SidebarContent>
             <Tabs defaultValue="effects" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
@@ -354,7 +389,7 @@ export function EffectsStudio() {
         {/* Main Canvas Area */}
         <main className="flex-1 pt-12 pb-12">
           <div className="w-full h-full relative">
-            <div className="absolute inset-4 rounded-lg overflow-hidden border border-border bg-black">
+            <div ref={canvasRef} className="absolute inset-4 rounded-lg overflow-hidden border border-border bg-black">
               {isPlaying && <ActiveEffectComponent />}
               {!isPlaying && (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground">
@@ -374,8 +409,10 @@ export function EffectsStudio() {
         {/* Bottom Bar */}
         <div className="fixed bottom-0 left-0 right-0 h-12 bg-background/95 backdrop-blur-sm border-t border-border z-40 flex items-center px-4">
           <div className="flex items-center gap-4">
-            <Badge variant="outline">FPS: 60</Badge>
-            <Badge variant="outline">Canvas: 1920x1080</Badge>
+            <Badge variant="outline">FPS: {Math.round(metrics.fps)}</Badge>
+            <Badge variant="outline">Frame: {metrics.frameTime.toFixed(1)}ms</Badge>
+            <Badge variant="outline">Canvas: {canvasSize.width}x{canvasSize.height}</Badge>
+            <Badge variant="outline">Heap: {metrics.memory ? `${metrics.memory.usedMB}/${metrics.memory.totalMB} MB` : '—'}</Badge>
           </div>
           <div className="flex-1 flex justify-center">
             <Button variant="ghost" size="sm">
