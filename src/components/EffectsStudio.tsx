@@ -372,6 +372,7 @@ export function EffectsStudio() {
                             const isActive = activeEffect === effect.name;
                             const initials = effect.name.split(' ').map(w => w[0]).join('').slice(0, 2);
                             const hue = effect.name.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+                            return (
                               <Tooltip key={effect.name}>
                                 <TooltipTrigger asChild>
                                   <button
