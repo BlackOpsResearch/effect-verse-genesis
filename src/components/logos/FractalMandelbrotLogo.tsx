@@ -1,34 +1,31 @@
 import React, { useRef, useEffect } from 'react';
 
-export function FractalMandelbrotLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function FractalMandelbrotLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.02;
-      
       const fractals = logo.querySelectorAll('.fractal');
       fractals.forEach((fractal, index) => {
         const htmlFractal = fractal as HTMLElement;
         const scale = 0.8 + Math.sin(time * 1.5 + index * 0.7) * 0.3;
         const rotation = time * 20 + index * 60;
-        
         htmlFractal.style.transform = `rotate(${rotation}deg) scale(${scale})`;
         htmlFractal.style.filter = `hue-rotate(${(time * 40 + index * 90) % 360}deg)`;
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>

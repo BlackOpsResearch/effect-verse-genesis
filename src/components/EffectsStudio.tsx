@@ -243,10 +243,11 @@ const effectCategories = {
 };
 
 export function EffectsStudio() {
-  const [activeEffect, setActiveEffect] = useState('Particle Background');
+const [activeEffect, setActiveEffect] = useState('Particle Background');
   const [isPlaying, setIsPlaying] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [hoveredEffect, setHoveredEffect] = useState<string | null>(null);
 
   const ActiveEffectComponent = () => {
     for (const category of Object.values(effectCategories)) {
@@ -371,18 +372,21 @@ export function EffectsStudio() {
                           {category.effects.map((effect) => {
                             const Logo = (effectLogos as any)[effect.name] as React.ComponentType<any> | undefined;
                             const isActive = activeEffect === effect.name;
+                            const shouldAnimate = isActive || hoveredEffect === effect.name;
                             return (
                               <Tooltip key={effect.name}>
                                 <TooltipTrigger asChild>
                                   <button
                                     onClick={() => setActiveEffect(effect.name)}
+                                    onMouseEnter={() => setHoveredEffect(effect.name)}
+                                    onMouseLeave={() => setHoveredEffect(null)}
                                     aria-label={effect.name}
                                     className={`aspect-square rounded-md border flex items-center justify-center transition-colors ${isActive ? 'ring-2 ring-primary' : ''} hover:bg-muted/40 border-border`}
                                   >
                                     {Logo ? (
-                                      <Logo size={40} className="opacity-90" />
+                                      <Logo size={40} className="opacity-90" animate={shouldAnimate} />
                                     ) : (
-                                      <EffectLogo name={effect.name} size={40} className="opacity-90" />
+                                      <EffectLogo name={effect.name} size={40} className="opacity-90" animate={shouldAnimate} />
                                     )}
                                   </button>
                                 </TooltipTrigger>

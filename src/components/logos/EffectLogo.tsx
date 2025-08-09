@@ -28,7 +28,7 @@ function pickBaseLogo(name: string) {
   return AuroraWavesLogo;
 }
 
-export function EffectLogo({ name, size = 40, className = '' }: { name: string; size?: number; className?: string }) {
+export function EffectLogo({ name, size = 40, className = '', animate = false }: { name: string; size?: number; className?: string; animate?: boolean }) {
   const Base = pickBaseLogo(name);
   const hue = hashHue(name);
   return (
@@ -36,7 +36,7 @@ export function EffectLogo({ name, size = 40, className = '' }: { name: string; 
       className={className}
       style={{ filter: `hue-rotate(${hue}deg) saturate(1.1) brightness(1.05)` }}
     >
-      <Base size={size} />
+      <Base size={size} animate={animate} />
     </div>
   );
 }

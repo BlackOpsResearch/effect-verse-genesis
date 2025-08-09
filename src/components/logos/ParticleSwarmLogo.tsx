@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 
-export function ParticleSwarmLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function ParticleSwarmLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.04;
-      
       const particles = logo.querySelectorAll('.particle');
       particles.forEach((particle, index) => {
         const htmlParticle = particle as HTMLElement;
@@ -20,17 +19,15 @@ export function ParticleSwarmLogo({ className = "", size = 64 }: { className?: s
         const radius = 20 + Math.sin(time * 2 + index) * 8;
         const x = Math.sin(angle) * radius;
         const y = Math.cos(angle * 1.3) * radius;
-        
         htmlParticle.style.transform = `translate(${x}px, ${y}px)`;
         htmlParticle.style.opacity = (0.4 + Math.sin(time * 3 + index) * 0.4).toString();
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>

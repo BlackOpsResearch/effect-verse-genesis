@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 
-export function BinaryMatrixLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function BinaryMatrixLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.1;
-      
       const digits = logo.querySelectorAll('.digit');
       digits.forEach((digit, index) => {
         const htmlDigit = digit as HTMLElement;
@@ -21,13 +20,12 @@ export function BinaryMatrixLogo({ className = "", size = 64 }: { className?: st
         htmlDigit.style.color = shouldFlip ? '#00ff00' : '#004400';
         htmlDigit.style.textShadow = shouldFlip ? '0 0 10px #00ff00' : 'none';
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative flex items-center justify-center ${className}`} style={{ width: size, height: size }}>

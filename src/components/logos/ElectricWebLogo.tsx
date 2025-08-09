@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 
-export function ElectricWebLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function ElectricWebLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.1;
-      
       const bolts = logo.querySelectorAll('.lightning-bolt');
       bolts.forEach((bolt, index) => {
         const htmlBolt = bolt as HTMLElement;
@@ -20,13 +19,12 @@ export function ElectricWebLogo({ className = "", size = 64 }: { className?: str
         htmlBolt.style.opacity = (0.3 + intensity * 0.7).toString();
         htmlBolt.style.filter = `brightness(${1 + intensity})`;
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>

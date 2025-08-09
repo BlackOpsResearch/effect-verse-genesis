@@ -1,40 +1,36 @@
 import React, { useRef, useEffect } from 'react';
 
-export function NeuralNetworkLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function NeuralNetworkLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.03;
-      
       const nodes = logo.querySelectorAll('.node');
       const connections = logo.querySelectorAll('.connection');
-      
       nodes.forEach((node, index) => {
         const htmlNode = node as HTMLElement;
         const pulse = Math.sin(time * 2 + index * 0.5) * 0.3 + 0.7;
         htmlNode.style.transform = `scale(${pulse})`;
         htmlNode.style.opacity = pulse.toString();
       });
-      
       connections.forEach((connection, index) => {
         const htmlConnection = connection as HTMLElement;
         const flow = Math.sin(time * 3 + index * 0.8) * 0.5 + 0.5;
         htmlConnection.style.opacity = flow.toString();
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>

@@ -1,18 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 
-export function PlasmaEffectLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function PlasmaEffectLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.05;
-      
       const orbs = logo.querySelectorAll('.plasma-orb');
       orbs.forEach((orb, index) => {
         const htmlOrb = orb as HTMLElement;
@@ -20,17 +19,15 @@ export function PlasmaEffectLogo({ className = "", size = 64 }: { className?: st
         const speed = 1 + index * 0.3;
         const x = Math.sin(time * speed + index * 2) * radius;
         const y = Math.cos(time * speed + index * 2) * radius;
-        
         htmlOrb.style.transform = `translate(${x}px, ${y}px)`;
         htmlOrb.style.filter = `hue-rotate(${(time * 60 + index * 120) % 360}deg)`;
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>

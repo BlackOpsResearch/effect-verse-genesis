@@ -1,34 +1,31 @@
 import React, { useRef, useEffect } from 'react';
 
-export function CrystalGrowthLogo({ className = "", size = 64 }: { className?: string; size?: number }) {
+export function CrystalGrowthLogo({ className = "", size = 64, animate = false }: { className?: string; size?: number; animate?: boolean }) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const logo = logoRef.current;
-    if (!logo) return;
+    if (!logo || !animate) return;
 
     let animationId: number;
     let time = 0;
 
-    const animate = () => {
+    const tick = () => {
       time += 0.02;
-      
       const crystals = logo.querySelectorAll('.crystal');
       crystals.forEach((crystal, index) => {
         const htmlCrystal = crystal as HTMLElement;
         const scale = 0.8 + Math.sin(time * 2 + index * 0.8) * 0.3;
         const rotation = time * 10 + index * 45;
-        
         htmlCrystal.style.transform = `rotate(${rotation}deg) scale(${scale})`;
         htmlCrystal.style.filter = `hue-rotate(${(time * 50 + index * 120) % 360}deg)`;
       });
-
-      animationId = requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [animate]);
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>
