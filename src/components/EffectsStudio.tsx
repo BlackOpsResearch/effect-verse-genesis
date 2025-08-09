@@ -368,11 +368,11 @@ const [activeEffect, setActiveEffect] = useState('Particle Background');
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-2">
+                        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-3">
                           {category.effects.map((effect) => {
                             const Logo = (effectLogos as any)[effect.name] as React.ComponentType<any> | undefined;
                             const isActive = activeEffect === effect.name;
-                            const shouldAnimate = isActive || hoveredEffect === effect.name;
+                            const shouldAnimate = hoveredEffect === effect.name;
                             return (
                               <Tooltip key={effect.name}>
                                 <TooltipTrigger asChild>
@@ -381,7 +381,7 @@ const [activeEffect, setActiveEffect] = useState('Particle Background');
                                     onMouseEnter={() => setHoveredEffect(effect.name)}
                                     onMouseLeave={() => setHoveredEffect(null)}
                                     aria-label={effect.name}
-                                    className={`aspect-square rounded-md border flex items-center justify-center transition-colors ${isActive ? 'ring-2 ring-primary' : ''} hover:bg-muted/40 border-border`}
+                                    className={`relative aspect-square rounded-md border flex items-center justify-center overflow-hidden p-1 transition-colors ${isActive ? 'ring-2 ring-primary' : ''} hover:bg-muted/40 border-border`}
                                   >
                                     {Logo ? (
                                       <Logo size={40} className="opacity-90" animate={shouldAnimate} />

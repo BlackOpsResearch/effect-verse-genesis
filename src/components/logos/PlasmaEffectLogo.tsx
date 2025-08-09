@@ -38,15 +38,15 @@ export function PlasmaEffectLogo({ className = "", size = 64, animate = false }:
         <div
           key={i}
           className="plasma-orb absolute left-1/2 top-1/2 w-3 h-3 -ml-1.5 -mt-1.5 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 shadow-lg"
-          style={{
-            boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)',
-            animation: `pulse ${1 + i * 0.2}s ease-in-out infinite alternate`,
-          }}
+            style={{
+              boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)',
+              animation: animate ? `pulse ${1 + i * 0.2}s ease-in-out infinite alternate` : undefined,
+            }}
         />
       ))}
       
       {/* Energy core */}
-      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white to-purple-300 animate-pulse shadow-lg shadow-purple-400/50" />
+      <div className={`absolute inset-6 rounded-full bg-gradient-to-br from-white to-purple-300 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-purple-400/50`} />
     </div>
   );
 }

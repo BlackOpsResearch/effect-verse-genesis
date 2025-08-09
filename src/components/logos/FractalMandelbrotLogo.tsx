@@ -57,7 +57,7 @@ export function FractalMandelbrotLogo({ className = "", size = 64, animate = fal
       ))}
       
       {/* Mandelbrot center */}
-      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white to-magenta-300 animate-pulse shadow-lg shadow-magenta-400/50" />
+      <div className={`absolute inset-6 rounded-full bg-gradient-to-br from-white to-magenta-300 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-magenta-400/50`} />
     </div>
   );
 }

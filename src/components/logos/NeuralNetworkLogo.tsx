@@ -53,7 +53,7 @@ export function NeuralNetworkLogo({ className = "", size = 64, animate = false }
       </svg>
       
       {/* Processing core */}
-      <div className="absolute inset-5 rounded-full bg-gradient-to-br from-blue-300 to-green-400 animate-pulse shadow-lg shadow-green-400/50" />
+      <div className={`absolute inset-5 rounded-full bg-gradient-to-br from-blue-300 to-green-400 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-green-400/50`} />
     </div>
   );
 }

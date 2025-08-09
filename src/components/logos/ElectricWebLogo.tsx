@@ -42,7 +42,7 @@ export function ElectricWebLogo({ className = "", size = 64, animate = false }: 
       </svg>
       
       {/* Electric core */}
-      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-yellow-300 to-blue-400 animate-pulse shadow-lg shadow-yellow-400/50" />
+      <div className={`absolute inset-4 rounded-full bg-gradient-to-br from-yellow-300 to-blue-400 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-yellow-400/50`} />
     </div>
   );
 }

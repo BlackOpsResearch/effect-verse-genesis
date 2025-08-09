@@ -45,8 +45,8 @@ export function BinaryMatrixLogo({ className = "", size = 64, animate = false }:
       </div>
       
       {/* Scanning line */}
-      <div className="absolute top-0 w-full h-0.5 bg-green-400 animate-pulse shadow-lg shadow-green-400/50" 
-           style={{ animation: 'scan 2s linear infinite' }} />
+      <div className={`absolute top-0 w-full h-0.5 bg-green-400 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-green-400/50`} 
+           style={{ animation: animate ? 'scan 2s linear infinite' : 'none' }} />
     </div>
   );
 }

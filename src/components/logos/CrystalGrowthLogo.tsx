@@ -54,7 +54,7 @@ export function CrystalGrowthLogo({ className = "", size = 64, animate = false }
       ))}
       
       {/* Center gem */}
-      <div className="absolute inset-4 bg-gradient-to-br from-white to-cyan-300 rounded-full animate-pulse shadow-lg shadow-cyan-400/50" />
+      <div className={`absolute inset-4 bg-gradient-to-br from-white to-cyan-300 rounded-full ${animate ? 'animate-pulse' : ''} shadow-lg shadow-cyan-400/50`} />
     </div>
   );
 }

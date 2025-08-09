@@ -30,7 +30,7 @@ export function AuroraWavesLogo({ className = "", size = 64, animate = false }: 
 
   return (
     <div ref={logoRef} className={`relative ${className}`} style={{ width: size, height: size }}>
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20 animate-pulse" />
+      <div className={`absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20 ${animate ? 'animate-pulse' : ''}`} />
       
       {/* Aurora waves */}
       {[0, 1, 2, 3].map((i) => (
@@ -46,7 +46,7 @@ export function AuroraWavesLogo({ className = "", size = 64, animate = false }: 
       ))}
       
       {/* Center glow */}
-      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-300 to-purple-400 animate-pulse shadow-lg shadow-blue-400/50" />
+      <div className={`absolute inset-4 rounded-full bg-gradient-to-br from-blue-300 to-purple-400 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-blue-400/50`} />
     </div>
   );
 }

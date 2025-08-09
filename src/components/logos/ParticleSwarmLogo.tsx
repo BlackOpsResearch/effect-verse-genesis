@@ -45,7 +45,7 @@ export function ParticleSwarmLogo({ className = "", size = 64, animate = false }
       ))}
       
       {/* Center attractor */}
-      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 animate-pulse shadow-lg shadow-orange-400/50" />
+      <div className={`absolute inset-6 rounded-full bg-gradient-to-br from-yellow-300 to-orange-400 ${animate ? 'animate-pulse' : ''} shadow-lg shadow-orange-400/50`} />
     </div>
   );
 }
