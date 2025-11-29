@@ -2,3 +2,18 @@ project_id = "dipcahabgdokfwwoxfrt"
 
 [functions.generate-effect]
 verify_jwt = false
+
+[functions.generate-image-ai]
+verify_jwt = false
+
+[functions.generate-audio-tts]
+verify_jwt = false
+
+[functions.conversational-agent]
+verify_jwt = false
+
+[functions.coding-agent]
+verify_jwt = false
+
+[functions.multi-agent-coordinator]
+verify_jwt = false
