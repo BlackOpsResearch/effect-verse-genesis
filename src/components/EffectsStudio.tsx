@@ -34,6 +34,10 @@ import {
 import { usePerformanceMetrics } from '@/hooks/usePerformanceMetrics';
 import { PerformancePanel } from './PerformancePanel';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { AIStudioDrawer } from './AIStudioDrawer';
+import { EffectPresetsDrawer } from './EffectPresetsDrawer';
+import { SpeedControlPanel } from './SpeedControlPanel';
+import { useSpeed } from '@/contexts/SpeedContext';
 import { AuroraWavesLogo } from './logos/AuroraWavesLogo';
 import { BinaryMatrixLogo } from './logos/BinaryMatrixLogo';
 import { CrystalGrowthLogo } from './logos/CrystalGrowthLogo';
@@ -248,6 +252,8 @@ const [activeEffect, setActiveEffect] = useState('Particle Background');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [hoveredEffect, setHoveredEffect] = useState<string | null>(null);
+  const [activePreset, setActivePreset] = useState<any>(null);
+  const { effectiveSpeed } = useSpeed();
 
   const ActiveEffectComponent = () => {
     for (const category of Object.values(effectCategories)) {
@@ -295,6 +301,13 @@ const [activeEffect, setActiveEffect] = useState('Particle Background');
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             </Button>
+            <AIStudioDrawer />
+            <EffectPresetsDrawer onApplyPreset={(preset) => {
+              setActivePreset(preset);
+              if (preset.effects.length > 0) {
+                setActiveEffect(preset.effects[0]);
+              }
+            }} />
             <Sheet open={settingsOpen} onOpenChange={setSettingsOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -436,26 +449,26 @@ const [activeEffect, setActiveEffect] = useState('Particle Background');
         </main>
 
         {/* Bottom Bar */}
-        <div className="fixed bottom-0 left-0 right-0 h-12 bg-background/95 backdrop-blur-sm border-t border-border z-40 flex items-center px-4">
-          <div className="flex items-center gap-4">
-            <Badge variant="outline">FPS: {Math.round(metrics.fps)}</Badge>
-            <Badge variant="outline">Frame: {metrics.frameTime.toFixed(1)}ms</Badge>
-            <Badge variant="outline">Canvas: {canvasSize.width}x{canvasSize.height}</Badge>
-            <Badge variant="outline">Heap: {metrics.memory ? `${metrics.memory.usedMB}/${metrics.memory.totalMB} MB` : '—'}</Badge>
-          </div>
-          <div className="flex-1 flex justify-center">
-            <Button variant="ghost" size="sm">
-              <Code className="w-4 h-4 mr-2" />
-              View Code
-            </Button>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm">
-              <Monitor className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="sm">
-              <Layers className="w-4 h-4" />
-            </Button>
+        <div className="fixed bottom-0 left-0 right-0 h-auto bg-background/95 backdrop-blur-sm border-t border-border z-40 px-4 py-3">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
+              <Badge variant="outline">FPS: {Math.round(metrics.fps)}</Badge>
+              <Badge variant="outline">Frame: {metrics.frameTime.toFixed(1)}ms</Badge>
+              <Badge variant="outline">Canvas: {canvasSize.width}x{canvasSize.height}</Badge>
+              <Badge variant="outline">Heap: {metrics.memory ? `${metrics.memory.usedMB}/${metrics.memory.totalMB} MB` : '—'}</Badge>
+              <Badge variant="outline" className={effectiveSpeed < 1 ? 'text-orange-500' : ''}>
+                Speed: {effectiveSpeed.toFixed(2)}x
+              </Badge>
+            </div>
+            <div className="flex-1 max-w-md">
+              <SpeedControlPanel />
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm">
+                <Code className="w-4 h-4 mr-2" />
+                View Code
+              </Button>
+            </div>
           </div>
         </div>
       </div>

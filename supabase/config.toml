@@ -1,0 +1,4 @@
+project_id = "dipcahabgdokfwwoxfrt"
+
+[functions.generate-effect]
+verify_jwt = false
