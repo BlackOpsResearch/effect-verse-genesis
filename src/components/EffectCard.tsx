@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { ElectricButton } from "./ElectricButton";
 import { PlasmaEffect } from "./PlasmaEffect";
@@ -51,7 +50,6 @@ interface EffectCardProps {
 
 export function EffectCard({ title, description, category, preview, className, style }: EffectCardProps) {
   const { toast } = useToast();
-  const [isHovered, setIsHovered] = useState(false);
 
   const getEffectComponent = () => {
     // Map specific titles to components for variety
@@ -514,13 +512,9 @@ export function ${componentName}() {
   return (
     <Card className={`glass glass-hover electric-border p-6 group ${className}`} style={style}>
       {/* Preview Area */}
-      <div
-        className="relative aspect-video bg-gradient-to-br from-background to-muted rounded-lg mb-4 overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          {isHovered && getEffectComponent()}
+      <div className="relative aspect-video bg-gradient-to-br from-background to-muted rounded-lg mb-4 overflow-hidden">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+          {getEffectComponent()}
         </div>
         <div className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-500 flex items-center justify-center">
           <div className="text-muted-foreground text-sm">Hover to preview</div>
