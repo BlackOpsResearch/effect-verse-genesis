@@ -19,13 +19,6 @@ export function TessellationPattern() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      initTiles();
-    };
-    resizeCanvas();
-
     const tiles: Tile[] = [];
     let time = 0;
 
@@ -49,6 +42,12 @@ export function TessellationPattern() {
           });
         }
       }
+    };
+
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      initTiles();
     };
 
     const drawHexagon = (x: number, y: number, size: number, rotation: number) => {
@@ -137,7 +136,7 @@ export function TessellationPattern() {
       requestAnimationFrame(animate);
     };
 
-    initTiles();
+    resizeCanvas();
     animate();
 
     const handleResize = () => resizeCanvas();
