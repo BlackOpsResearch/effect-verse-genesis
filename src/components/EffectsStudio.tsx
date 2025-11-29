@@ -35,6 +35,7 @@ import { usePerformanceMetrics } from '@/hooks/usePerformanceMetrics';
 import { PerformancePanel } from './PerformancePanel';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { AIStudioDrawer } from './AIStudioDrawer';
+import { AIWorkspace } from './AIWorkspace';
 import { EffectPresetsDrawer } from './EffectPresetsDrawer';
 import { SpeedControlPanel } from './SpeedControlPanel';
 import { useSpeed } from '@/contexts/SpeedContext';
