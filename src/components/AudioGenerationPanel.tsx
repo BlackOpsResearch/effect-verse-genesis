@@ -1,20 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Music, Loader2, Play, Pause, Download } from 'lucide-react';
+import { Music, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
-const VOICES = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
-
 export function AudioGenerationPanel() {
   const [text, setText] = useState('');
-  const [voice, setVoice] = useState('alloy');
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioDescription, setAudioDescription] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const { toast } = useToast();
 
   const handleGenerate = async () => {
@@ -23,27 +17,21 @@ export function AudioGenerationPanel() {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('generate-audio-tts', {
-        body: { text, voice },
+        body: { text },
       });
 
       if (error) throw error;
 
-      const audioBlob = new Blob(
-        [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
-        { type: 'audio/mpeg' }
-      );
-      const url = URL.createObjectURL(audioBlob);
-      setAudioUrl(url);
-
+      setAudioDescription(data.audioDescription);
       toast({
-        title: 'Audio generated!',
-        description: 'Your audio is ready to play.',
+        title: 'Audio Description Generated',
+        description: 'AI analyzed how this text should sound.',
       });
     } catch (error: any) {
       console.error('Audio generation error:', error);
       toast({
         title: 'Generation failed',
-        description: error.message || 'Failed to generate audio. Make sure OPENAI_API_KEY is configured.',
+        description: error.message,
         variant: 'destructive',
       });
     } finally {
@@ -51,50 +39,15 @@ export function AudioGenerationPanel() {
     }
   };
 
-  const togglePlayback = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const downloadAudio = () => {
-    if (!audioUrl) return;
-    const link = document.createElement('a');
-    link.href = audioUrl;
-    link.download = 'generated-audio.mp3';
-    link.click();
-  };
-
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="space-y-4">
         <div>
-          <label className="text-sm font-medium mb-2 block">Voice</label>
-          <Select value={voice} onValueChange={setVoice}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {VOICES.map((v) => (
-                <SelectItem key={v} value={v}>
-                  {v.charAt(0).toUpperCase() + v.slice(1)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <label className="text-sm font-medium mb-2 block">Text to Speech</label>
+          <label className="text-sm font-medium mb-2 block">Text to Analyze</label>
           <Textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Enter text to convert to speech..."
+            placeholder="Enter text to analyze how it should sound..."
             className="min-h-[150px]"
           />
         </div>
@@ -103,47 +56,23 @@ export function AudioGenerationPanel() {
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Generating...
+              Analyzing...
             </>
           ) : (
             <>
               <Music className="w-4 h-4 mr-2" />
-              Generate Audio
+              Analyze Audio
             </>
           )}
         </Button>
       </div>
 
-      {audioUrl && (
-        <div className="glass p-6 rounded-lg space-y-4">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-medium">Generated Audio</label>
-            <Button variant="outline" size="sm" onClick={downloadAudio}>
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
+      {audioDescription && (
+        <div className="flex-1 flex flex-col gap-2">
+          <label className="text-sm font-medium">Audio Description</label>
+          <div className="flex-1 glass p-4 rounded-lg overflow-auto">
+            <p className="text-sm whitespace-pre-wrap">{audioDescription}</p>
           </div>
-
-          <audio
-            ref={audioRef}
-            src={audioUrl}
-            onEnded={() => setIsPlaying(false)}
-            className="hidden"
-          />
-
-          <Button onClick={togglePlayback} className="w-full">
-            {isPlaying ? (
-              <>
-                <Pause className="w-4 h-4 mr-2" />
-                Pause
-              </>
-            ) : (
-              <>
-                <Play className="w-4 h-4 mr-2" />
-                Play
-              </>
-            )}
-          </Button>
         </div>
       )}
     </div>
